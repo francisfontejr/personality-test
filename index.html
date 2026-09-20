@@ -71,6 +71,11 @@
 
   <form id="quizForm">
     <div class="question">
+      <h3>Your name or nickname:</h3>
+      <input id="friendName" type="text" placeholder="Enter your name or nickname" required
+        style="width:100%;padding:12px;border:1px solid #ddd;border-radius:8px;font-size:16px;">
+    </div>
+    <div class="question">
       <h3>1. At a party, you usually:</h3>
       <label><input type="radio" name="q1" value="A"> A. Stay mostly with one or two people</label>
       <label><input type="radio" name="q1" value="B"> B. Talk to many people and enjoy the energy</label>
@@ -166,7 +171,14 @@
 </div>
 
 <script>
-function calculateResult() {
+async function calculateResult() {
+  const friendName = document.getElementById("friendName").value.trim();
+  if (!friendName) {
+    alert("Please enter your name or nickname.");
+    document.getElementById("friendName").focus();
+    return;
+  }
+
   let scores = { A: 0, B: 0, C: 0, D: 0 };
 
   for (let i = 1; i <= 10; i++) {
@@ -223,6 +235,29 @@ function calculateResult() {
 
   document.getElementById("result").style.display = "block";
   document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+
+  const finalResult = winners.length === 1
+    ? names[winners[0]]
+    : winners.map(winner => names[winner]).join(" + ");
+
+  const formData = new URLSearchParams();
+  formData.append("name", friendName);
+  formData.append("introvert", scores.A);
+  formData.append("extrovert", scores.B);
+  formData.append("ambivert", scores.C);
+  formData.append("otrovert", scores.D);
+  formData.append("result", finalResult);
+
+  try {
+    await fetch("https://script.google.com/macros/s/AKfycbxKEX6oVe5-f5N6n1FjLk1jOl3zQy4c2uYXdNF9xmxXMWtu27Xk5yYGumZYe6QBkrM/exec", {
+      method: "POST",
+      mode: "no-cors",
+      headers: { "Content-Type": "application/x-www-form-urlencoded;charset=UTF-8" },
+      body: formData.toString()
+    });
+  } catch (error) {
+    console.error("Could not save result:", error);
+  }
 }
 
 function resetQuiz() {
