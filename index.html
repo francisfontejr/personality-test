@@ -1,557 +1,236 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="2685.7">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Personality Test</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      margin: 0;
+      padding: 20px;
+      color: #222;
+    }
+    .container {
+      max-width: 750px;
+      margin: auto;
+      background: white;
+      padding: 25px;
+      border-radius: 16px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+    h1 { text-align: center; margin-bottom: 5px; }
+    .subtitle { text-align: center; color: #666; margin-bottom: 30px; }
+    .question {
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid #eee;
+    }
+    .question h3 { font-size: 17px; margin-bottom: 12px; }
+    label {
+      display: block;
+      padding: 10px;
+      margin: 6px 0;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    label:hover { background: #f0f0f0; }
+    input[type="radio"] { margin-right: 8px; }
+    button {
+      width: 100%;
+      padding: 14px;
+      border: none;
+      border-radius: 10px;
+      font-size: 16px;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    #submitBtn { background: #222; color: white; }
+    #resetBtn { background: #ddd; color: #222; }
+    #result {
+      display: none;
+      margin-top: 30px;
+      padding: 20px;
+      background: #f7f7f7;
+      border-radius: 12px;
+      text-align: center;
+    }
+    #result h2 { margin-top: 0; }
+    .score { margin-top: 15px; font-size: 14px; color: #555; }
+    .note { margin-top: 20px; font-size: 12px; color: #888; text-align: center; }
   </style>
 </head>
 <body>
-<p class="p1">&lt;!DOCTYPE html&gt;</p>
-<p class="p1">&lt;html lang="en"&gt;</p>
-<p class="p1">&lt;head&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;title&gt;Personality Test&lt;/title&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;style&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>* {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-sizing: border-box;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>body {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-family: Arial, sans-serif;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #f5f5f5;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #222;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.container {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>max-width: 750px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: auto;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: white;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 25px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>box-shadow: 0 4px 15px rgba(0,0,0,0.08);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>h1 {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 5px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.subtitle {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #666;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 30px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.question {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 28px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding-bottom: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-bottom: 1px solid #eee;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.question h3 {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 17px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-bottom: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>label {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: block;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin: 6px 0;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: 1px solid #ddd;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>transition: 0.2s;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>label:hover {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #f0f0f0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>input[type="radio"] {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-right: 8px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>button {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>width: 100%;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 16px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>cursor: pointer;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 10px;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>#submitBtn {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #222;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: white;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>#resetBtn {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #ddd;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #222;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>#result {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>display: none;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 30px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>padding: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>background: #f7f7f7;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>border-radius: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>#result h2 {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 0;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.score {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 15px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 14px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #555;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>.note {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>margin-top: 20px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>font-size: 12px;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>color: #888;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>text-align: center;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</p>
-<p class="p1">&lt;/head&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;body&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;div class="container"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;h1&gt;What's Your Personality Type?&lt;/h1&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;p class="subtitle"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>Introvert • Extrovert • Ambivert • Otrovert</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;form id="quizForm"&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;1. At a party, you usually:&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q1" value="A"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A. Stay mostly with one or two people</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q1" value="B"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>B. Talk to many people and enjoy the energy</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q1" value="C"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>C. Socialize for a while, then need a break</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q1" value="D"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>D. Talk comfortably, but don't feel a need to belong to the group</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;2. When you have free time, you prefer:&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q2" value="A"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A. Being alone or with one close person</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q2" value="B"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>B. Going out and meeting people</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q2" value="C"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>C. A mix of alone time and social time</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q2" value="D"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>D. Doing your own thing, regardless of what others are doing</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;3. In a group chat, you:&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q3" value="A"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A. Rarely participate</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q3" value="B"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>B. Participate often</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q3" value="C"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>C. Participate depending on your mood</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q3" value="D"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>D. Reply when you want, but don't care much about being included</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;4. When entering a new workplace or community:&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q4" value="A"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A. You take time to warm up</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q4" value="B"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>B. You quickly try to meet everyone</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q4" value="C"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>C. You socialize but also keep some distance</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q4" value="D"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>D. You can socialize, but don't feel pressure to fit in</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;5. Your ideal friendship style is:&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q5" value="A"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A. A very small circle of close friends</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q5" value="B"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>B. Lots of friends and regular social activities</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q5" value="C"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>C. A mix of close friends and acquaintances</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q5" value="D"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>D. Strong individual friendships without needing a friend group</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;6. If your friends are doing something you don't enjoy:&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q6" value="A"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A. You might still join them</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q6" value="B"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>B. You usually want to join</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q6" value="C"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>C. It depends on the situation</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q6" value="D"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>D. You're comfortable doing something else on your own</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;7. After several hours of socializing, you usually feel:&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q7" value="A"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A. Drained</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q7" value="B"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>B. Energized</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q7" value="C"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>C. Sometimes energized, sometimes drained</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q7" value="D"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>D. Fine either way, as long as the interaction was meaningful</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;8. How important is being accepted by a group?&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q8" value="A"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A. Somewhat important, but groups can be tiring</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q8" value="B"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>B. Very important</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q8" value="C"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>C. Depends on the situation</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q8" value="D"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>D. Not very important — you care more about individual relationships and your own values</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;9. When making decisions, you usually:&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q9" value="A"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A. Think privately before deciding</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q9" value="B"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>B. Like discussing things with several people</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q9" value="C"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>C. Use both approaches</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q9" value="D"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>D. Listen to others, but strongly prefer making up your own mind</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="question"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;h3&gt;10. Which statement fits you best?&lt;/h3&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q10" value="A"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>A. I enjoy people, but I need plenty of alone time.</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q10" value="B"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>B. I feel happiest when I'm around people.</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q10" value="C"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>C. Sometimes I'm social, sometimes I want to be alone.</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>&lt;input type="radio" name="q10" value="D"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">        </span>D. I can be social, but I don't really feel a need to belong to a group.</p>
-<p class="p1"><span class="Apple-converted-space">      </span>&lt;/label&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button type="button" id="submitBtn" onclick="calculateResult()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>See My Result</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;button type="button" id="resetBtn" onclick="resetQuiz()"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">      </span>Reset Test</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;/button&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/form&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div id="result"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;h2 id="resultTitle"&gt;&lt;/h2&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;p id="resultDescription"&gt;&lt;/p&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>&lt;div class="score" id="scoreDisplay"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;div class="note"&gt;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>This quiz is for fun and self-reflection only. It is not a formal psychological assessment.</p>
-<p class="p1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/div&gt;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1">&lt;script&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">function calculateResult() {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>let scores = {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>A: 0,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>B: 0,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>C: 0,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>D: 0</p>
-<p class="p1"><span class="Apple-converted-space">  </span>};</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>for (let i = 1; i &lt;= 10; i++) {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>let answer = document.querySelector(</p>
-<p class="p1"><span class="Apple-converted-space">      </span>'input[name="q' + i + '"]:checked'</p>
-<p class="p1"><span class="Apple-converted-space">    </span>);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (!answer) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>alert("Please answer all 10 questions.");</p>
-<p class="p1"><span class="Apple-converted-space">      </span>return;</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>scores[answer.value]++;</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>let maxScore = Math.max(</p>
-<p class="p1"><span class="Apple-converted-space">    </span>scores.A,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>scores.B,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>scores.C,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>scores.D</p>
-<p class="p1"><span class="Apple-converted-space">  </span>);</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>let winners = [];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>for (let type in scores) {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>if (scores[type] === maxScore) {</p>
-<p class="p1"><span class="Apple-converted-space">      </span>winners.push(type);</p>
-<p class="p1"><span class="Apple-converted-space">    </span>}</p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const names = {</p>
-<p class="p1"><span class="Apple-converted-space">    </span>A: "Introvert",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>B: "Extrovert",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>C: "Ambivert",</p>
-<p class="p1"><span class="Apple-converted-space">    </span>D: "Otrovert"</p>
-<p class="p1"><span class="Apple-converted-space">  </span>};</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>const descriptions = {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>A:</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"You tend to prefer deeper one-on-one connections, smaller social circles, and enough alone time to recharge.",</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>B:</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"You tend to gain energy from social interaction and enjoy meeting, talking with, and spending time with other people.",</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>C:</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"You have a balance of introverted and extroverted tendencies. Your social energy often depends on your mood and situation.",</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>D:</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"You can enjoy social interaction while remaining highly independent. You may care less about fitting into groups and prefer meaningful individual connections."</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>};</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>let title = "";</p>
-<p class="p1"><span class="Apple-converted-space">  </span>let description = "";</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>if (winners.length === 1) {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>let winner = winners[0];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>title = "You are mostly an " + names[winner] + "!";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>description = descriptions[winner];</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>} else {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>let winnerNames = winners.map(</p>
-<p class="p1"><span class="Apple-converted-space">      </span>winner =&gt; names[winner]</p>
-<p class="p1"><span class="Apple-converted-space">    </span>);</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>title = "You have a mixed personality!";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">    </span>description =</p>
-<p class="p1"><span class="Apple-converted-space">      </span>"Your strongest traits are: " +</p>
-<p class="p1"><span class="Apple-converted-space">      </span>winnerNames.join(" + ") +</p>
-<p class="p1"><span class="Apple-converted-space">      </span>". You may show different personality traits depending on the situation.";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>}</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("resultTitle").innerText = title;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("resultDescription").innerText =</p>
-<p class="p1"><span class="Apple-converted-space">    </span>description;</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("scoreDisplay").innerHTML =</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"&lt;strong&gt;Your Scores&lt;/strong&gt;&lt;br&gt;&lt;br&gt;" +</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"Introvert: " + scores.A + "&lt;br&gt;" +</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"Extrovert: " + scores.B + "&lt;br&gt;" +</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"Ambivert: " + scores.C + "&lt;br&gt;" +</p>
-<p class="p1"><span class="Apple-converted-space">    </span>"Otrovert: " + scores.D;</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("result").style.display = "block";</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("result").scrollIntoView({</p>
-<p class="p1"><span class="Apple-converted-space">    </span>behavior: "smooth"</p>
-<p class="p1"><span class="Apple-converted-space">  </span>});</p>
-<p class="p2"><br></p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p2"><br></p>
-<p class="p1">function resetQuiz() {</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("quizForm").reset();</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>document.getElementById("result").style.display = "none";</p>
-<p class="p2"><br></p>
-<p class="p1"><span class="Apple-converted-space">  </span>window.scrollTo({</p>
-<p class="p1"><span class="Apple-converted-space">    </span>top: 0,</p>
-<p class="p1"><span class="Apple-converted-space">    </span>behavior: "smooth"</p>
-<p class="p1"><span class="Apple-converted-space">  </span>});</p>
-<p class="p2"><br></p>
-<p class="p1">}</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/script&gt;</p>
-<p class="p2"><br></p>
-<p class="p1">&lt;/body&gt;</p>
-<p class="p1">&lt;/html&gt;</p>
+<div class="container">
+  <h1>What's Your Personality Type?</h1>
+  <p class="subtitle">Introvert • Extrovert • Ambivert • Otrovert</p>
+
+  <form id="quizForm">
+    <div class="question">
+      <h3>1. At a party, you usually:</h3>
+      <label><input type="radio" name="q1" value="A"> A. Stay mostly with one or two people</label>
+      <label><input type="radio" name="q1" value="B"> B. Talk to many people and enjoy the energy</label>
+      <label><input type="radio" name="q1" value="C"> C. Socialize for a while, then need a break</label>
+      <label><input type="radio" name="q1" value="D"> D. Talk comfortably, but don't feel a need to belong to the group</label>
+    </div>
+
+    <div class="question">
+      <h3>2. When you have free time, you prefer:</h3>
+      <label><input type="radio" name="q2" value="A"> A. Being alone or with one close person</label>
+      <label><input type="radio" name="q2" value="B"> B. Going out and meeting people</label>
+      <label><input type="radio" name="q2" value="C"> C. A mix of alone time and social time</label>
+      <label><input type="radio" name="q2" value="D"> D. Doing your own thing, regardless of what others are doing</label>
+    </div>
+
+    <div class="question">
+      <h3>3. In a group chat, you:</h3>
+      <label><input type="radio" name="q3" value="A"> A. Rarely participate</label>
+      <label><input type="radio" name="q3" value="B"> B. Participate often</label>
+      <label><input type="radio" name="q3" value="C"> C. Participate depending on your mood</label>
+      <label><input type="radio" name="q3" value="D"> D. Reply when you want, but don't care much about being included</label>
+    </div>
+
+    <div class="question">
+      <h3>4. When entering a new workplace or community:</h3>
+      <label><input type="radio" name="q4" value="A"> A. You take time to warm up</label>
+      <label><input type="radio" name="q4" value="B"> B. You quickly try to meet everyone</label>
+      <label><input type="radio" name="q4" value="C"> C. You socialize but also keep some distance</label>
+      <label><input type="radio" name="q4" value="D"> D. You can socialize, but don't feel pressure to fit in</label>
+    </div>
+
+    <div class="question">
+      <h3>5. Your ideal friendship style is:</h3>
+      <label><input type="radio" name="q5" value="A"> A. A very small circle of close friends</label>
+      <label><input type="radio" name="q5" value="B"> B. Lots of friends and regular social activities</label>
+      <label><input type="radio" name="q5" value="C"> C. A mix of close friends and acquaintances</label>
+      <label><input type="radio" name="q5" value="D"> D. Strong individual friendships without needing a friend group</label>
+    </div>
+
+    <div class="question">
+      <h3>6. If your friends are doing something you don't enjoy:</h3>
+      <label><input type="radio" name="q6" value="A"> A. You might still join them</label>
+      <label><input type="radio" name="q6" value="B"> B. You usually want to join</label>
+      <label><input type="radio" name="q6" value="C"> C. It depends on the situation</label>
+      <label><input type="radio" name="q6" value="D"> D. You're comfortable doing something else on your own</label>
+    </div>
+
+    <div class="question">
+      <h3>7. After several hours of socializing, you usually feel:</h3>
+      <label><input type="radio" name="q7" value="A"> A. Drained</label>
+      <label><input type="radio" name="q7" value="B"> B. Energized</label>
+      <label><input type="radio" name="q7" value="C"> C. Sometimes energized, sometimes drained</label>
+      <label><input type="radio" name="q7" value="D"> D. Fine either way, as long as the interaction was meaningful</label>
+    </div>
+
+    <div class="question">
+      <h3>8. How important is being accepted by a group?</h3>
+      <label><input type="radio" name="q8" value="A"> A. Somewhat important, but groups can be tiring</label>
+      <label><input type="radio" name="q8" value="B"> B. Very important</label>
+      <label><input type="radio" name="q8" value="C"> C. Depends on the situation</label>
+      <label><input type="radio" name="q8" value="D"> D. Not very important — you care more about individual relationships and your own values</label>
+    </div>
+
+    <div class="question">
+      <h3>9. When making decisions, you usually:</h3>
+      <label><input type="radio" name="q9" value="A"> A. Think privately before deciding</label>
+      <label><input type="radio" name="q9" value="B"> B. Like discussing things with several people</label>
+      <label><input type="radio" name="q9" value="C"> C. Use both approaches</label>
+      <label><input type="radio" name="q9" value="D"> D. Listen to others, but strongly prefer making up your own mind</label>
+    </div>
+
+    <div class="question">
+      <h3>10. Which statement fits you best?</h3>
+      <label><input type="radio" name="q10" value="A"> A. I enjoy people, but I need plenty of alone time.</label>
+      <label><input type="radio" name="q10" value="B"> B. I feel happiest when I'm around people.</label>
+      <label><input type="radio" name="q10" value="C"> C. Sometimes I'm social, sometimes I want to be alone.</label>
+      <label><input type="radio" name="q10" value="D"> D. I can be social, but I don't really feel a need to belong to a group.</label>
+    </div>
+
+    <button type="button" id="submitBtn" onclick="calculateResult()">See My Result</button>
+    <button type="button" id="resetBtn" onclick="resetQuiz()">Reset Test</button>
+  </form>
+
+  <div id="result">
+    <h2 id="resultTitle"></h2>
+    <p id="resultDescription"></p>
+    <div class="score" id="scoreDisplay"></div>
+  </div>
+
+  <div class="note">
+    This quiz is for fun and self-reflection only. It is not a formal psychological assessment.
+  </div>
+</div>
+
+<script>
+function calculateResult() {
+  let scores = { A: 0, B: 0, C: 0, D: 0 };
+
+  for (let i = 1; i <= 10; i++) {
+    let answer = document.querySelector('input[name="q' + i + '"]:checked');
+    if (!answer) {
+      alert("Please answer all 10 questions.");
+      return;
+    }
+    scores[answer.value]++;
+  }
+
+  let maxScore = Math.max(scores.A, scores.B, scores.C, scores.D);
+  let winners = [];
+
+  for (let type in scores) {
+    if (scores[type] === maxScore) winners.push(type);
+  }
+
+  const names = {
+    A: "Introvert",
+    B: "Extrovert",
+    C: "Ambivert",
+    D: "Otrovert"
+  };
+
+  const descriptions = {
+    A: "You tend to prefer deeper one-on-one connections, smaller social circles, and enough alone time to recharge.",
+    B: "You tend to gain energy from social interaction and enjoy meeting, talking with, and spending time with other people.",
+    C: "You have a balance of introverted and extroverted tendencies. Your social energy often depends on your mood and situation.",
+    D: "You can enjoy social interaction while remaining highly independent. You may care less about fitting into groups and prefer meaningful individual connections."
+  };
+
+  let title = "";
+  let description = "";
+
+  if (winners.length === 1) {
+    let winner = winners[0];
+    title = "You are mostly an " + names[winner] + "!";
+    description = descriptions[winner];
+  } else {
+    let winnerNames = winners.map(winner => names[winner]);
+    title = "You have a mixed personality!";
+    description = "Your strongest traits are: " + winnerNames.join(" + ") + ". You may show different personality traits depending on the situation.";
+  }
+
+  document.getElementById("resultTitle").innerText = title;
+  document.getElementById("resultDescription").innerText = description;
+  document.getElementById("scoreDisplay").innerHTML =
+    "<strong>Your Scores</strong><br><br>" +
+    "Introvert: " + scores.A + "<br>" +
+    "Extrovert: " + scores.B + "<br>" +
+    "Ambivert: " + scores.C + "<br>" +
+    "Otrovert: " + scores.D;
+
+  document.getElementById("result").style.display = "block";
+  document.getElementById("result").scrollIntoView({ behavior: "smooth" });
+}
+
+function resetQuiz() {
+  document.getElementById("quizForm").reset();
+  document.getElementById("result").style.display = "none";
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+</script>
+
 </body>
 </html>
